@@ -1,37 +1,35 @@
-## Welcome to GitHub Pages
+# Welcome to the Stick Bug Page
 
-You can use the [editor on GitHub](https://github.com/gtaEPIC/Stickbug/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This is the source code for my pretty pointless app. Feel free to make changes to it as I am still only learning how to do this stuff. I will eventually clean it up myself.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Features:
 
-### Markdown
+### Animation
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+It's just a Stick Bug dancing as a gif...
 
-```markdown
-Syntax highlighted code block
+### Counter
 
-# Header 1
-## Header 2
-### Header 3
+The app counts how many times the song has played. Also you can find the source of this [Here](https://www.youtube.com/watch?v=gPPKHt6hFCA)
 
-- Bulleted
-- List
+### Continuous playing
 
-1. Numbered
-2. List
+The Stick Bug song will continue to play even when the app is CLOSED. The only ways to close it are by hitting "MAKE IT STOP" on the notification (Notifications must be ON) or by forcing the app to stop. If the song stops for no reason, it might be because your phone needs more memory, but that shouldn't happen anyways.
 
-**Bold** and _Italic_ and `Code` text
+### Notification
 
-[Link](url) and ![Image](src)
-```
+As said above, a notification pops up (should be silent) and will stay until the song is stopped. The notification will show you how many times it has played as well and will continue to update. IF you turn off the notification, the only way to stop the song is to go to the settings and force stop the app. So don't turn off the notification.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Future Updates:
 
-### Jekyll Themes
+### Stick Bug and Rick Roll
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gtaEPIC/Stickbug/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Someone is finna get Rick Rolled
 
-### Support or Contact
+### Stick Bug and Distracted
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Someone is finna get Distracted
+
+## Bugs & Issues
+
+You can keep report any Bugs or Issues within the app in the [Issues](https://github.com/gtaEPIC/Stickbug/issues) tab. Please don't create duplicates, you can search to see if the problem already exists.
