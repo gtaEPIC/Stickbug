@@ -1,22 +1,14 @@
 package com.example.stickbug.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.stickbug.Background.Background;
 import com.example.stickbug.R;
@@ -30,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     boolean appOpen = false;
     TextView textView;
     Savedata savedata;
-    MediaPlayer mediaPlayer;
-    Background background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +30,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    private void refresh() {
+        savedata = new Savedata(new File(this.getFilesDir(), "yes.prop"));
+        repeats = savedata.getRepeats();
+    }
 
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -50,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 String check = bundle.getString(Background.REQUEST);
-                int Repeats = bundle.getInt(Background.REPEATS);
+                int Repeats = bundle.getInt(Background.REPEATS, -1);
                 repeats = Repeats;
-                savedata.saveRepeats(repeats);
+                if (Repeats != -1) {
+                    savedata.saveRepeats(repeats);
+                }
                 if (appOpen) {
                     textView.setText("x" + repeats);
                 }
@@ -67,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         appOpen = true;
+        refresh();
         textView.setText("x" + repeats);
     }
     @Override
@@ -84,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         appOpen = true;
         registerReceiver(receiver, new IntentFilter(Background.PACKAGE));
-        savedata = new Savedata(new File(this.getFilesDir(), "yes.prop"));
-        repeats = savedata.getRepeats();
+        refresh();
         textView = findViewById(R.id.times);
         textView.setText("x" + repeats);
         Intent intent = new Intent(this, Background.class);
