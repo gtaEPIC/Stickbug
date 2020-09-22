@@ -7,8 +7,8 @@ android {
         applicationId "com.example.stickbug"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.1 why am I making this"
+        versionCode 2
+        versionName "1.2 uwu please someone help me"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
