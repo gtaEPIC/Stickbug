@@ -12,12 +12,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.stickbug.R;
+import com.example.stickbug.Savedata.Savedata;
+
+import java.io.File;
 
 
 public class Background extends Service {
@@ -28,7 +30,6 @@ public class Background extends Service {
     public static final String REPEATS = "Repeats";
     public static final String TOTAL_REPEATS = "Total Repeats";
     public static final String APP_STATE = "App State";
-    public static final String APP_CLOSED = "Closed";
     public static final String APP_OPENED = "Opened";
     public static final String STOPPLZ = "Stop";
 
@@ -36,7 +37,10 @@ public class Background extends Service {
     private boolean playing = false;
     NotificationManagerCompat managerCompat;
 
-
+    private void refresh() {
+        Savedata savedata = new com.example.stickbug.Savedata.Savedata(new File(this.getFilesDir(), "yes.prop"));
+        savedata.saveRepeats(repeats);
+    }
 
     @Override
     public void onCreate() {
@@ -73,7 +77,7 @@ public class Background extends Service {
         PendingIntent stopPending = PendingIntent.getForegroundService(this, 0, stopIntent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "yes")
-                .setSmallIcon(R.drawable.stickbug)
+                .setSmallIcon(R.drawable.sb)
                 .setContentTitle("You are being Stick Bugged")
                 .setContentText("Song has played a total of x" + repeats)
                 .setContentIntent(pendingIntent)
@@ -92,6 +96,7 @@ public class Background extends Service {
         String request = "";
         String appState = "";
         try {
+            assert incoming != null;
             request = incoming.getString(REQUEST);
             appState = incoming.getString(APP_STATE);
 
@@ -99,6 +104,7 @@ public class Background extends Service {
             e.printStackTrace();
         }
         try {
+            assert request != null;
             if (request.equals(REPEATS)) {
                 returnCounter();
             }
@@ -110,12 +116,11 @@ public class Background extends Service {
                 //System.exit(0);
                 stopSelf();
             }
+            assert appState != null;
             if (appState.equals(APP_OPENED)) {
                 managerCompat.cancel(0);
             }
-            if (appState.equals(APP_CLOSED)) {
-                //managerCompat.notify(0, createNotification());
-            }
+            //managerCompat.notify(0, createNotification());
         }catch (NullPointerException e) {
             e.printStackTrace();
             Log.i("Error", "Error was sort of expected.");
@@ -152,6 +157,7 @@ public class Background extends Service {
     }
 
     private void returnCounter() {
+        refresh();
         Intent intent = new Intent(PACKAGE);
         intent.putExtra(REPEATS, repeats);
         sendBroadcast(intent);
